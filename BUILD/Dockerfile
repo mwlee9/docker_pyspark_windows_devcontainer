@@ -18,7 +18,7 @@ COPY requirements.txt ./requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
 ### Install Jupyter and extensions
-RUN python -m pip install --no-cache-dir jupyterlab notebook jupyter_contrib_nbextensions jupyter_nbextensions_configurator
+RUN python -m pip install --no-cache-dir jupyterlab jupyter_contrib_nbextensions jupyter_nbextensions_configurator
 
 ########################################################################################
 ### Change to the slim image to save on space - ONLY RECOMMENDED FOR STANDALONE PY APPS, according to Python Docker Repo.
@@ -31,7 +31,7 @@ ENV PATH="/opt/venv/bin:$PATH"
 RUN mkdir -p /usr/share/man/man1
 
 ### Install next round of linux dependencies that will need to persist in this stage. These are for MS SQL Server connection.
-RUN apt-get update && apt-get install -y --no-install-recommends libaio1 openjdk-11-jre-headless ca-certificates-java wget && \
+RUN apt-get update && apt-get install -y --no-install-recommends libaio1 openjdk-11-jre-headless openjdk-11-jdk-headless ca-certificates-java wget && \
     rm -rf /var/lib/apt/lists/*
 
 # Fix DL4006
@@ -42,9 +42,9 @@ USER root
 # Spark dependencies
 # Default values can be overridden at build time
 # (ARGS are in lower case to distinguish them from ENV)
-ARG spark_version="3.2.0"
-ARG hadoop_version="3.2"
-ARG spark_checksum="EBE51A449EBD070BE7D3570931044070E53C23076ABAD233B3C51D45A7C99326CF55805EE0D573E6EB7D6A67CFEF1963CD77D6DC07DD2FD70FD60DA9D1F79E5E"
+ARG spark_version="3.3.0"
+ARG hadoop_version="3"
+ARG spark_checksum="1e8234d0c1d2ab4462d6b0dfe5b54f2851dcd883378e0ed756140e10adfb5be4123961b521140f580e364c239872ea5a9f813a20b73c69cb6d4e95da2575c29c"
 ARG openjdk_version="11"
 
 ENV APACHE_SPARK_VERSION="${spark_version}" \
@@ -96,7 +96,7 @@ COPY style.min.css /opt/venv/lib/python3.7/site-packages/notebook/static/style/s
 RUN jupyter contrib nbextension install --user
 RUN jupyter nbextensions_configurator enable --user
 
-CMD ["jupyter", "notebook", "--port=8888", "--no-browser", "--ip=0.0.0.0", "--allow-root", "--NotebookApp.token=''"]
+CMD ["jupyter", "lab", "--port=8888", "--no-browser", "--ip=0.0.0.0", "--allow-root", "--NotebookApp.token=''"]
 
 ### Here for documentation, doesn't actually expose the port.
 EXPOSE 8888
