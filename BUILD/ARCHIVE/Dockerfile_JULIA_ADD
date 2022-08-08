@@ -1,0 +1,11 @@
+
+########################################################################################
+### Change to the slim image to save on space - ONLY RECOMMENDED FOR STANDALONE PY APPS, according to Python Docker Repo.
+FROM python:3.7.7 AS build-image
+
+
+
+CMD ["jupyter", "lab", "--port=8888", "--no-browser", "--ip=0.0.0.0", "--allow-root", "--NotebookApp.token=''"]
+
+### Here for documentation, doesn't actually expose the port.
+EXPOSE 8888

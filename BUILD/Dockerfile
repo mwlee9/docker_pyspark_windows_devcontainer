@@ -96,6 +96,13 @@ COPY style.min.css /opt/venv/lib/python3.7/site-packages/notebook/static/style/s
 RUN jupyter contrib nbextension install --user
 RUN jupyter nbextensions_configurator enable --user
 
+### Install Julia
+RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.7/julia-1.7.0-linux-x86_64.tar.gz
+RUN tar -xvzf julia-1.7.0-linux-x86_64.tar.gz
+RUN cp -r julia-1.7.0 /opt/
+RUN ln -s /opt/julia-1.7.0/bin/julia /usr/local/bin/julia
+RUN julia -e 'using Pkg;Pkg.add("IJulia")'
+
 CMD ["jupyter", "lab", "--port=8888", "--no-browser", "--ip=0.0.0.0", "--allow-root", "--NotebookApp.token=''"]
 
 ### Here for documentation, doesn't actually expose the port.
