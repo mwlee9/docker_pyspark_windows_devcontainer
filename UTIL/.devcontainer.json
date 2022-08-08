@@ -1,8 +1,8 @@
 // For format details, see https://aka.ms/vscode-remote/devcontainer.json or this file's README at:
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.128.0/containers/python-3
 {
-    "name": "iscptk_pyspark_dev",
-    "image": "iscp/iscptk_pyspark",
+    "name": "lee_pyspark",
+    "image": "lee/pyspark",
     // Set *default* container specific settings.json values on container create.
     "settings": {
         "terminal.integrated.shell.linux": "/bin/bash",
@@ -21,5 +21,5 @@
     "remoteUser": "root",
     // Use 'postCreateCommand' to run commands after the container is created.
     "postCreateCommand": "apt-get install git",
-    "postAttachCommand": "pip install --no-cache-dir pylint pycodestyle pydocstyle autopep8",
+    "postAttachCommand": "pip install --no-cache-dir pylint pydocstyle",
 }
