@@ -103,6 +103,13 @@ RUN cp -r julia-1.7.0 /opt/
 RUN ln -s /opt/julia-1.7.0/bin/julia /usr/local/bin/julia
 RUN julia -e 'using Pkg;Pkg.add("IJulia")'
 
+### Copy example config.yaml for S3 duckdb connection
+COPY config.yaml ./config.yaml
+
+### Copy DuckDB Example and Spark Example
+COPY DuckDB_Eval.ipynb ./DuckDB_Eval.ipynb
+COPY spark_Eval.ipynb ./spark_Eval.ipynb
+
 CMD ["jupyter", "lab", "--port=8888", "--no-browser", "--ip=0.0.0.0", "--allow-root", "--NotebookApp.token=''"]
 
 ### Here for documentation, doesn't actually expose the port.
